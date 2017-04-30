@@ -332,7 +332,7 @@ key-direction 0
 keepalive $OVPN_KEEPALIVE
 persist-key
 persist-tun
-
+client-to-client
 proto $OVPN_PROTO
 # Rely on Docker to do port mapping, internally always 1194
 port 1194
