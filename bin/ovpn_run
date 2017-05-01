@@ -5,7 +5,7 @@
 #
 
 if [ "$DEBUG" == "1" ]; then
-  set -x
+		set -x
 fi
 
 set -e
@@ -30,8 +30,8 @@ function addArg {
     local arg="${1}"
     [ $# -ge 1 ] && local val="${2}"
     if ! hasArg "${arg}" "${USER_ARGS[@]}"; then
-        ARGS+=("${arg}")
-        [ $# -ge 1 ] && ARGS+=("${val}")
+			ARGS+=("${arg}")
+			[ $# -ge 1 ] && ARGS+=("${val}")
     fi
 }
 
@@ -40,11 +40,11 @@ function addArg {
 # in an included file, such as ovpn_env.sh
 function setupIptablesAndRouting {
     iptables -t nat -C POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE || {
-      iptables -t nat -A POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE
+		iptables -t nat -A POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE
     }
     for i in "${OVPN_ROUTES[@]}"; do
         iptables -t nat -C POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE || {
-          iptables -t nat -A POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE
+			iptables -t nat -A POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE
         }
     done
 }
@@ -56,11 +56,11 @@ source "$OPENVPN/ovpn_env.sh"
 
 mkdir -p /dev/net
 if [ ! -c /dev/net/tun ]; then
-    mknod /dev/net/tun c 10 200
+		mknod /dev/net/tun c 10 200
 fi
 
 if [ -d "$OPENVPN/ccd" ]; then
-    addArg "--client-config-dir" "$OPENVPN/ccd"
+		addArg "--client-config-dir" "$OPENVPN/ccd"
 fi
 
 # When using --net=host, use this to specify nat device.
@@ -68,30 +68,30 @@ fi
 
 # Setup NAT forwarding if requested
 if [ "$OVPN_DEFROUTE" != "0" ] || [ "$OVPN_NAT" == "1" ] ; then
-	# call function to setup iptables rules and routing
-	# this allows rules to be customized by supplying
-	# a replacement function in, for example, ovpn_env.sh
-	setupIptablesAndRouting
+		# call function to setup iptables rules and routing
+		# this allows rules to be customized by supplying
+		# a replacement function in, for example, ovpn_env.sh
+		setupIptablesAndRouting
 fi
 
 # Use a hacky hardlink as the CRL Needs to be readable by the user/group
 # OpenVPN is running as.  Only pass arguments to OpenVPN if it's found.
 if [ -r "$EASYRSA_PKI/crl.pem" ]; then
-    if [ ! -r "$OPENVPN/crl.pem" ]; then
-        ln "$EASYRSA_PKI/crl.pem" "$OPENVPN/crl.pem"
-        chmod 644 "$OPENVPN/crl.pem"
-    fi
-    addArg "--crl-verify" "$OPENVPN/crl.pem"
+		if [ ! -r "$OPENVPN/crl.pem" ]; then
+				ln "$EASYRSA_PKI/crl.pem" "$OPENVPN/crl.pem"
+				chmod 644 "$OPENVPN/crl.pem"
+		fi
+		addArg "--crl-verify" "$OPENVPN/crl.pem"
 fi
 
 ip -6 route show default 2>/dev/null
 if [ $? = 0 ]; then
-    echo "Enabling IPv6 Forwarding"
-    # If this fails, ensure the docker container is run with --privileged
-    # Could be side stepped with `ip netns` madness to drop privileged flag
+		echo "Enabling IPv6 Forwarding"
+		# If this fails, ensure the docker container is run with --privileged
+		# Could be side stepped with `ip netns` madness to drop privileged flag
 
-    sysctl -w net.ipv6.conf.default.forwarding=1 || echo "Failed to enable IPv6 Forwarding default"
-    sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
+		sysctl -w net.ipv6.conf.default.forwarding=1 || echo "Failed to enable IPv6 Forwarding default"
+		sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
 fi
 
 echo "Running 'openvpn ${ARGS[@]} ${USER_ARGS[@]}'"
