@@ -14,7 +14,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 #### Upstream Links
 
 * Docker Registry @ [cesaralvernaz/openvpn](https://hub.docker.com/r/cesaralvernaz/openvpn/)
-* GitHub @ [cesaralvernaz/docker-openvpn](https://github.com/cesaralvernaz/docker-openvpn)
+* GitHub @ [calvernaz/docker-openvpn](https://github.com/calvernaz/docker-openvpn)
 
 ## Quick Start
 
