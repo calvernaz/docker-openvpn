@@ -1,15 +1,11 @@
-# Original credit: https://github.com/jpetazzo/dockvpn
+FROM debian:jessie-slim
 
-# Smallest base image
-FROM alpine:3.5
+LABEL maintainer "cesar.alvernaz@gmail.com"
 
-MAINTAINER Kyle Manna <kyle@kylemanna.com>
-
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-    apk add --update openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester && \
+RUN apt-get update && \
+    apt-get install -y openvpn iptables easy-rsa dnsmasq ipcalc socat && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
-    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Needed by scripts
 ENV OPENVPN /etc/openvpn
@@ -24,8 +20,7 @@ EXPOSE 1194/udp
 
 CMD ["ovpn_run"]
 
-ADD ./bin /usr/local/bin
-RUN chmod a+x /usr/local/bin/*
+RUN systemctl enable dnsmasq
 
-# Add support for OTP authentication using a PAM module
-ADD ./otp/openvpn /etc/pam.d/
+ADD ./bin /usr/local/bin
+ADD ./scripts /etc/openvpn

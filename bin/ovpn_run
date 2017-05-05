@@ -10,6 +10,8 @@ fi
 
 set -e
 
+#rc-service dnsmasq start
+
 cd $OPENVPN
 
 # Build runtime arguments array based on environment
@@ -94,5 +96,7 @@ if [ $? = 0 ]; then
 		sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
 fi
 
+exec /etc/init.d/dnsmasq start
+echo "addn-hosts=/etc/hosts.openvpn-clients" >> /etc/dnsmasq.conf
 echo "Running 'openvpn ${ARGS[@]} ${USER_ARGS[@]}'"
 exec openvpn ${ARGS[@]} ${USER_ARGS[@]}
