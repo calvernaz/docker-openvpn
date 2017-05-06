@@ -30,3 +30,16 @@ _This repo is forked from kylemanna/docker-openvpn_
 * Retrieve the client configuration with embedded certificates
 
         docker run -v $OVPN_DATA:/etc/openvpn --rm cesaralvernaz/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
+
+
+## go-dnsmasq
+
+Enables reach clients by name, inside the directory `scripts` the `learn-address.sh` script scraps the client connection name
+and prepends to an internal name (e.g client.internal.vpn).
+
+Example:
+
+    Sat May  6 20:05:01 2017 calvernaz/37.228.227.187:7492 MULTI: Learn: 192.168.255.6 -> calvernaz/37.228.227.187:7492
+    Sat May  6 20:05:01 2017 calvernaz/37.228.227.187:7492 MULTI: primary virtual IP for calvernaz/37.228.227.187:7492: 192.168.255.6
+    Sat May  6 20:05:04 2017 calvernaz/37.228.227.187:7492 PUSH: Received control message: 'PUSH_REQUEST'
+    Sat May  6 20:05:04 2017 calvernaz/37.228.227.187:7492 send_push_reply(): safe_cap=940
