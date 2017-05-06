@@ -41,7 +41,7 @@ esac
 [ -x /bin/lock ] && /bin/lock "$LOCKFILE"
 
 # clean up IP if we can
-[ -x /bin/ipcalc ] && eval $(ipcalc "$IP")
+#[ -x /bin/ipcalc ] && eval $(ipcalc "$IP")
 
 FQDN="$CN.$DOMAIN"
 
