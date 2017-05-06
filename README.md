@@ -39,7 +39,6 @@ and prepends to an internal name (e.g client.internal.vpn).
 
 Example:
 
-    Sat May  6 20:05:01 2017 calvernaz/37.228.227.187:7492 MULTI: Learn: 192.168.255.6 -> calvernaz/37.228.227.187:7492
-    Sat May  6 20:05:01 2017 calvernaz/37.228.227.187:7492 MULTI: primary virtual IP for calvernaz/37.228.227.187:7492: 192.168.255.6
-    Sat May  6 20:05:04 2017 calvernaz/37.228.227.187:7492 PUSH: Received control message: 'PUSH_REQUEST'
-    Sat May  6 20:05:04 2017 calvernaz/37.228.227.187:7492 send_push_reply(): safe_cap=940
+    Sat May  6 20:05:01 2017 calvernaz/xx.xx.xx.187:7492 MULTI: Learn: 192.168.255.6 -> calvernaz/xx.xxx.xxx.187:7492
+    Sat May  6 20:05:01 2017 calvernaz/xx.xx.xx.187:7492 MULTI: primary virtual IP for calvernaz/xx.xxx.xxx.187:7492: 192.168.255.6
+    Sat May  6 20:05:04 2017 calvernaz/xx.xx.xx.187:7492 PUSH: Received control message: 'PUSH_REQUEST'
