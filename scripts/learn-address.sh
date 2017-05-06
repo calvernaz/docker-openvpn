@@ -38,7 +38,7 @@ case "$1" in
 esac
 
 # serialise concurrent accesses
-[ -x /bin/lock ] && /bin/lock "$LOCKFILE"
+[ -x /bin/flock ] && /bin/flock "$LOCKFILE"
 
 # clean up IP if we can
 #[ -x /bin/ipcalc ] && eval $(ipcalc "$IP")
@@ -80,4 +80,6 @@ esac
 
 /bin/rm "$t"
 
-[ -x /bin/lock ] && /bin/lock -u "$LOCKFILE"
+[ -x /bin/flock ] && /bin/flock -u "$LOCKFILE"
+
+exit 0
