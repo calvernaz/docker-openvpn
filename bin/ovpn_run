@@ -96,6 +96,6 @@ if [ $? = 0 ]; then
 		sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
 fi
 
-exec go-dnsmasq-min_linux-amd64 --default-resolver --enable-search --hostsfile=/etc/hosts.vpn-clients
+exec go-dnsmasq-min_linux-amd64 --default-resolver --enable-search --hostsfile=/etc/hosts.vpn-clients &
 echo "Running 'openvpn ${ARGS[@]} ${USER_ARGS[@]}'"
 exec openvpn ${ARGS[@]} ${USER_ARGS[@]}
