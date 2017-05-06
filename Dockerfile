@@ -1,11 +1,14 @@
-FROM debian:jessie-slim
+FROM alpine:3.5
 
 LABEL maintainer "cesar.alvernaz@gmail.com"
 
-RUN apt-get update && \
-    apt-get install -y openvpn iptables easy-rsa dnsmasq ipcalc socat && \
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
+    apk add --update openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester ipcalc && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+
+ADD https://github.com/janeczku/go-dnsmasq/releases/download/1.0.7/go-dnsmasq-min_linux-amd64 /usr/local/bin
 
 # Needed by scripts
 ENV OPENVPN /etc/openvpn
@@ -20,7 +23,8 @@ EXPOSE 1194/udp
 
 CMD ["ovpn_run"]
 
-RUN systemctl enable dnsmasq
-
 ADD ./bin /usr/local/bin
+RUN chmod a+x /usr/local/bin/*
 ADD ./scripts /etc/openvpn
+
+ADD ./otp/openvpn /etc/pam.d/

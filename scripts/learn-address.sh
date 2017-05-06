@@ -76,7 +76,7 @@ case "$1" in
 esac
 
 # signal dnsmasq to reread hosts file
-/bin/kill -HUP $(cat /var/run/dnsmasq/dnsmasq.pid)
+#/bin/kill -HUP $(cat /var/run/dnsmasq/dnsmasq.pid)
 
 /bin/rm "$t"
 
