@@ -25,6 +25,7 @@ CMD ["ovpn_run"]
 
 ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
+RUN chown nobody:nobody /etc/hosts
 ADD ./scripts /etc/openvpn
 
 ADD ./otp/openvpn /etc/pam.d/

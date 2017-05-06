@@ -10,7 +10,7 @@
 # replace with a sub-domain of your domain, use a sub-domain to
 # prevent VPN clients from stealing existing names
 DOMAIN=internal.vpn.livesense.au
-HOSTS=/etc/hosts.openvpn-clients
+HOSTS=/etc/hosts
 
 h=$(/usr/bin/basename "$HOSTS")
 LOCKFILE="/var/run/$h.lock"
