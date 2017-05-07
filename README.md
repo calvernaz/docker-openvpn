@@ -34,7 +34,7 @@ _This repo is forked from kylemanna/docker-openvpn_
 
 ## go-dnsmasq
 
-Enables reach clients by name, inside the directory `scripts` the `learn-address.sh` script scraps the client connection name
+Enables to reach clients by name, inside the directory `scripts` the `learn-address.sh` script scraps the client connection name
 and prepends to an internal name (e.g client.internal.vpn).
 
 Example:
