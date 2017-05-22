@@ -16,6 +16,15 @@ ENV EASYRSA /usr/share/easy-rsa
 ENV EASYRSA_PKI $OPENVPN/pki
 ENV EASYRSA_VARS_FILE $OPENVPN/vars
 
+# go dnsmasq
+ENV DNSMASQ_DEFAULT true
+ENV DNSMASQ_SERVERS 192.168.255.1
+ENV DNSMASQ_HOSTSFILE /etc/hosts.vpn-clients
+ENV DNSMASQ_POLL 30
+ENV DNSMASQ_SEARCH_DOMAINS internal.vpn.livesense.au
+ENV DNSMASQ_ENABLE_SEARCH true
+
+
 VOLUME ["/etc/openvpn"]
 
 # Internally uses port 1194/udp, remap using `docker run -p 443:1194/tcp`
@@ -23,7 +32,9 @@ EXPOSE 1194/udp
 
 ADD ./bin /usr/local/bin
 
-RUN chmod a+x /usr/local/bin/*
+RUN chmod a+x /usr/local/bin/* && \
+    /etc/openvpn/ovpn_env.sh
+
 RUN touch /etc/hosts.vpn-clients && \
     chown nobody:nobody /etc/hosts.vpn-clients
 
