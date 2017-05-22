@@ -32,8 +32,7 @@ EXPOSE 1194/udp
 
 ADD ./bin /usr/local/bin
 
-RUN chmod a+x /usr/local/bin/* && \
-    /etc/openvpn/ovpn_env.sh
+RUN chmod a+x /usr/local/bin/* 
 
 RUN touch /etc/hosts.vpn-clients && \
     chown nobody:nobody /etc/hosts.vpn-clients

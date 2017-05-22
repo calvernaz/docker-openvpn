@@ -10,8 +10,6 @@ fi
 
 set -e
 
-#rc-service dnsmasq start
-
 cd $OPENVPN
 
 # Build runtime arguments array based on environment
