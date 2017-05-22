@@ -9,11 +9,16 @@ _This repo is forked from kylemanna/docker-openvpn_
 
 ## Quick Start
 
-* Pick a name for the `$OVPN_DATA` data volume container, it will be created automatically.
+* Pick a name for the `$OVPN_DATA` data volume container. It's recommended to
+  use the `ovpn-data-` prefix to operate seamlessly with the reference systemd
+  service.  Users are encourage to replace `example` with a descriptive name of
+  their choosing.
 
-        OVPN_DATA="ovpn-data"
+        OVPN_DATA="ovpn-data-example"
 
-* Initialize the `$OVPN_DATA` container that will hold the configuration files and certificates
+* Initialize the `$OVPN_DATA` container that will hold the configuration files
+  and certificates.  The container will prompt for a passphrase to protect the
+  private key used by the newly generated certificate authority.
 
         docker volume create --name $OVPN_DATA
         docker run -v $OVPN_DATA:/etc/openvpn --rm cesaralvernaz/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
@@ -30,7 +35,6 @@ _This repo is forked from kylemanna/docker-openvpn_
 * Retrieve the client configuration with embedded certificates
 
         docker run -v $OVPN_DATA:/etc/openvpn --rm cesaralvernaz/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
-
 
 ## go-dnsmasq
 
