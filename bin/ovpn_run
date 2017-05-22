@@ -51,7 +51,7 @@ function setupIptablesAndRouting {
 
 
 addArg "--config" "$OPENVPN/openvpn.conf"
-
+chmod +x "$OPENVPN/ovpn_env.sh"
 source "$OPENVPN/ovpn_env.sh"
 
 mkdir -p /dev/net
